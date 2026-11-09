@@ -56,6 +56,12 @@ All are listed in `.env.example`.
 
 **Moving content from your computer to the live site:** Admin → Settings → Download backup locally, then Restore on the live admin.
 
+## Photos
+
+Near-lossless crops of Ayush's photos live in `src/assets/ayush/` and are imported by `src/components/About.tsx` (portrait, still and filmstrip) and the contact section. Next.js serves them as resized WebP with a blur placeholder. The full-size originals are in `photos-original/`, outside `public/`, so they are never published. Crop new ones from there.
+
+The footer credit links to Code Hyphen (`public/brands/code-hyphen.webp`).
+
 ## Edit content in code
 
 | What | Where |
@@ -87,6 +93,10 @@ These keep scrolling smooth. Each one was measured, so please keep them when cha
 - YouTube iframes are created only on click (`VideoFacade.tsx`).
 - Grid columns use `minmax(0, 1fr)`, never bare `1fr`. A long title or logo otherwise widens the column past the screen.
 - Hero wall tiles round the image itself instead of clipping the tile. Clipping cost about 6fps on Intel HD 520.
+- Images: every photo and thumbnail is served as WebP through `next/image`. Quality is set once in `src/lib/images.ts` (85 for thumbnails, 90 for Ayush's photos, 50 only behind heavy blur), picked by measuring SSIM at served sizes. WebP is used over AVIF because it decodes faster on low-end phones.
+- Every `sizes` value matches the rendered width. Too small looks soft, too large wastes data.
+- Photo masters in `src/assets/ayush/` are near-lossless (JPEG q95, 4:4:4) so served images are compressed only once.
+- `MotionEngine` decodes images a screen ahead of the viewport, so first-time decoding does not drop frames.
 
 ## SEO, AEO and GEO
 

@@ -18,7 +18,7 @@ export const brands: Brand[] = [
   { id: "black-white", name: "Black & White" },
   { id: "hapusa", name: "HAPUSA" },
   { id: "unicorn", name: "Unicorn Store × iPhone" },
-  { id: "code-hyphen", name: "Code Hyphen" },
+  { id: "code-hyphen", name: "Code Hyphen", logo: { src: "/brands/code-hyphen.webp", width: 228, height: 78 } },
 ];
 
 export const categories: Category[] = [

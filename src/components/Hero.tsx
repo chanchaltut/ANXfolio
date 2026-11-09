@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { Settings, Video } from "@/content/types";
+import { IMAGE_QUALITY } from "@/lib/images";
 import { thumbnailUrl } from "@/lib/youtube";
 import { Arrow } from "./Icons";
 import { LOGO_H, LOGO_PATH, LOGO_W } from "./logo-path";
@@ -32,9 +33,11 @@ export function Hero({ videos, settings }: { videos: Video[]; settings: Settings
                       src={thumbnailUrl(video)}
                       alt=""
                       fill
-                      sizes="(max-width: 700px) 140px, 240px"
-                      quality={55}
-                      loading={i < column.length ? "eager" : "lazy"}
+                      // The rotated, scaled wall makes each tile about 24vw wide (40vw on phones).
+                      sizes="(max-width: 700px) 40vw, 24vw"
+                      quality={IMAGE_QUALITY.content}
+                      // Columns 5 and 6 are hidden on phones, so only the first four load eagerly.
+                      loading={i < column.length && c < 4 ? "eager" : "lazy"}
                     />
                   </div>
                 ))}

@@ -20,6 +20,8 @@ export const seedSettings: Settings = {
   topVideoViews: "40M+",
   topVideoLabel: "on a single American Tourister reel",
   city: "",
+  about:
+    "I'm Ayush Nayak, and ANX is the name on my edits. I cut brand promos, fashion films, jewellery, food and beverage reels and long-form stories for brands and creators.\n\nEvery edit starts with one question: why would anyone keep watching? Pacing, sound and colour are how I answer it.",
   socials: {
     instagram: "",
     youtube: "https://www.youtube.com/@Anx.Production",
@@ -55,6 +57,7 @@ export function profileLinks(settings: Settings) {
 }
 
 export const navLinks = [
+  { label: "About", href: "#about" },
   { label: "Work", href: "#work" },
   { label: "Services", href: "#services" },
   { label: "Testimonial", href: "#testimonial" },

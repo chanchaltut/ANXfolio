@@ -31,6 +31,11 @@ Nothing is committed. The folder is not a git repository yet. No server is left 
 - Draft testimonials are hidden on the site (the old on-screen "Placeholder" labels are gone)
 - Responsive fixes: no horizontal scroll at 320 to 1920px, on the site and in the admin
 - Hero performance: about 6fps gained on weak GPUs from rounding the image corners instead of clipping the tiles
+- **"The editor" section** (2026-11-09): studio portrait in a camera viewfinder, the ANX.PRODUCTION still overlapping it, a bio Ayush can edit in Settings, and an "Off the timeline" filmstrip of five candid photos that drifts with the scroll. "About" added to the nav and the timeline dock
+- Contact section shows a small avatar ("Every brief comes straight to me"). The Person schema now has his photo
+- Footer credit: "Designed & built by Code Hyphen", linking to codehyphen.in. The same logo now fills the Code Hyphen client logo in the brand strip
+- Image quality pass (2026-11-09): WebP quality raised from 55/70 to 85 (thumbnails) and 90 (photos), photo masters rebuilt near-lossless, wrong `sizes` fixed on the hero wall, avatar and filmstrip, images decoded ahead of the viewport
+- Original photos moved from `public/` to `photos-original/` (23 MB, including one with an ID badge), so they are not published. Web crops are in `src/assets/ayush/`
 
 ## Test results (2026-11-09)
 
@@ -40,9 +45,11 @@ Nothing is committed. The folder is not a git repository yet. No server is left 
 | Overflow and console errors, 9 widths × 12 pages | None, in Chrome and WebKit (Safari's engine) |
 | Public interactions (menu, FAQ, play, sliders, carousel, dock) | Passing in Chrome and WebKit |
 | Layout shift | 0 to 0.03 |
-| Scrolling, Intel HD 520 GPU, 1440×900 | 57 to 60fps on most sections, hero 44 to 56fps |
+| Scrolling, Intel HD 520 GPU, 1440×900 | 57 to 60fps on most sections, hero 44 to 60fps, new editor section 54fps |
 | Scrolling, phone emulation with 4× CPU slowdown | 41 to 57fps, no frames over 34ms |
 | JavaScript | 192 KB gzipped, mostly the React and Next.js runtime |
+| Images | All WebP (plus 3 SVG logos). Thumbnails q85, photos q90 (measured visually lossless). First screen 0.4 MB on iPhone, 1.0 MB on a retina desktop |
+| Full-page scroll, Intel HD 520 GPU | 58 to 60fps, 95% of frames under 17ms, LCP 0.5 to 0.8s |
 
 WebKit was tested in Playwright, not on an actual iPhone. A real-device check is still worth doing after deploy.
 
@@ -63,7 +70,8 @@ The admin Overview page shows this as a checklist.
 - [ ] Inbox email (Settings)
 - [ ] Instagram link and city (Settings)
 - [ ] Real testimonials (Testimonials)
-- [ ] Logos for Smirnoff, Black & White, HAPUSA, Unicorn Store and Code Hyphen (Brands)
+- [ ] Logos for Smirnoff, Black & White, HAPUSA and Unicorn Store (Brands)
+- [ ] Check the bio under Settings → About you. It is a draft written from the brief
 - [ ] View counts for the other videos (Videos)
 - [ ] Better titles for the generic "Fashion film edit 01" style videos (Videos)
 - [ ] Prices, if he wants them shown (Pricing)

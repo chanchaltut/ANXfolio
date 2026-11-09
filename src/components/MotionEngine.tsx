@@ -56,11 +56,29 @@ export function MotionEngine() {
     );
     countEls.forEach((el) => countObserver.observe(el));
 
+    // Decode images about a screen before they scroll in, so the first paint of a frame never
+    // waits on decoding. That was the main source of dropped frames on a first scroll.
+    const decodeObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          decodeObserver.unobserve(entry.target);
+          const img = entry.target as HTMLImageElement;
+          if (img.loading === "lazy") img.loading = "eager";
+          img.decode().catch(() => undefined);
+        });
+      },
+      { rootMargin: "100% 0px 100% 0px" },
+    );
+    document
+      .querySelectorAll<HTMLImageElement>("main img:not(.wall__tile img)")
+      .forEach((img) => decodeObserver.observe(img));
+
     // Looping CSS animations still tick on the main thread offscreen, so pause them there.
     const loopObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => entry.target.classList.toggle("is-paused", !entry.isIntersecting));
     });
-    document.querySelectorAll(".hero__stage,.marquee,.nextup").forEach((el) => loopObserver.observe(el));
+    document.querySelectorAll(".hero__stage,.marquee,.nextup,.about").forEach((el) => loopObserver.observe(el));
 
     const parallax: Parallax[] = [];
     document.querySelectorAll<HTMLElement>("[data-speed],[data-drift]").forEach((el) => {
@@ -226,6 +244,7 @@ export function MotionEngine() {
       countObserver.disconnect();
       parallaxObserver.disconnect();
       loopObserver.disconnect();
+      decodeObserver.disconnect();
       resizeObserver.disconnect();
       window.removeEventListener("resize", measure);
       window.removeEventListener("pointermove", onPointer);

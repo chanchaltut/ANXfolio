@@ -1,14 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
+import portrait from "@/assets/ayush/portrait-studio.jpg";
 import type { Brand, Category, Faq, PricingTier, Settings, Testimonial, Video } from "@/content/types";
 import { manifesto, services, site } from "@/content/site";
+import { IMAGE_QUALITY } from "@/lib/images";
 import { thumbnailUrl } from "@/lib/youtube";
 import { BrandMark } from "./BrandMark";
 import { ContactForm } from "./ContactForm";
 import { Arrow } from "./Icons";
 import { Logo } from "./Logo";
 
-function Slate({ scene, label }: { scene: string; label: string }) {
+export function Slate({ scene, label }: { scene: string; label: string }) {
   return (
     <p className="slate">
       <i /> Scene {scene} <span>/</span> {label}
@@ -152,7 +154,7 @@ export function Services({ videos, live }: { videos: Video[]; live: Category[] }
               <span className="svc__desc">{service.description}</span>
               {video && (
                 <span className="svc__thumb" aria-hidden="true">
-                  <Image src={thumbnailUrl(video)} alt="" fill sizes="180px" quality={55} />
+                  <Image src={thumbnailUrl(video)} alt="" fill sizes="128px" quality={IMAGE_QUALITY.content} />
                 </span>
               )}
               {href && (
@@ -323,6 +325,16 @@ export function Contact({
             Let&rsquo;s make them <em>stop scrolling.</em>
           </h2>
           <p className="lede">Send the footage, the idea or just the deadline. I&rsquo;ll tell you what the edit should be.</p>
+          <div className="contact__me">
+            <span className="contact__avatar">
+              {/* Scaled 1.8x in CSS to frame the face, so it needs about 100px of pixels. */}
+              <Image src={portrait} alt="" fill sizes="100px" quality={IMAGE_QUALITY.photo} />
+            </span>
+            <p>
+              <b>Ayush Nayak</b>
+              <span>Every brief comes straight to me.</span>
+            </p>
+          </div>
           {social && (
             <a className="textlink" href={social.href} target="_blank" rel="noopener me">
               ANX on {social.label} <Arrow />
@@ -385,9 +397,19 @@ export function Footer({
       <div className="footer__logo" aria-hidden="true" data-speed="-0.06">
         <Logo />
       </div>
-      <p className="footer__legal wrap">
-        © {new Date().getFullYear()} {site.person}. Brand names and logos belong to their owners.
-      </p>
+      <div className="footer__legal wrap">
+        <p>
+          © {new Date().getFullYear()} {site.person}. Brand names and logos belong to their owners.
+        </p>
+        <a className="credit" href="https://www.codehyphen.in" target="_blank" rel="noopener">
+          <span className="credit__label">Designed &amp; built by</span>
+          {/* eslint-disable-next-line @next/next/no-img-element -- tiny static logo */}
+          <img className="credit__logo" src="/brands/code-hyphen.webp" alt="Code Hyphen" width={70} height={24} loading="lazy" />
+          <span className="credit__arrow" aria-hidden="true">
+            <Arrow />
+          </span>
+        </a>
+      </div>
     </footer>
   );
 }

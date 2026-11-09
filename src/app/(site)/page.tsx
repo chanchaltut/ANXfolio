@@ -1,3 +1,4 @@
+import { About } from "@/components/About";
 import { Hero } from "@/components/Hero";
 import { LongFormCarousel } from "@/components/LongFormCarousel";
 import { Nav } from "@/components/Nav";
@@ -62,6 +63,7 @@ export default async function HomePage() {
         <BrandMarquee brands={brands} />
         <Manifesto />
         <Stats videoCount={videos.length} genreCount={live.length} settings={settings} />
+        <About settings={settings} />
 
         <section id="work" data-clip="Shorts" aria-label="Short videos">
           <WorkIntro />

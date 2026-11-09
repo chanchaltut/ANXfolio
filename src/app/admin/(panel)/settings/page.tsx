@@ -26,6 +26,10 @@ export default async function SettingsPage() {
             <input name="city" defaultValue={settings.city} maxLength={80} />
           </Field>
 
+          <Field label="About you" hint="Shown next to your portrait. Write in first person. Leave a blank line between paragraphs." wide>
+            <textarea name="about" defaultValue={settings.about} rows={5} maxLength={900} />
+          </Field>
+
           <h2 className="a-form__title">Numbers</h2>
           <Field label="Total views" hint="Shown in the hero, stats and FAQ. Leave empty to hide.">
             <input name="totalViews" defaultValue={settings.totalViews} maxLength={20} />

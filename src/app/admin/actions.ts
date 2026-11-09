@@ -449,6 +449,7 @@ export async function updateSettings(_prev: Result, form: FormData): Promise<Res
       topVideoViews: text(form, "topVideoViews", 20),
       topVideoLabel: text(form, "topVideoLabel", 80),
       city: text(form, "city", 80),
+      about: text(form, "about", 900),
       socials,
     };
   }, "Settings saved.");

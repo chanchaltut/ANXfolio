@@ -4,6 +4,7 @@ import { useEffect, useId, useState } from "react";
 import Image from "next/image";
 import type { Video } from "@/content/types";
 import { announcePlay, PLAY_EVENT } from "@/lib/motion";
+import { IMAGE_QUALITY } from "@/lib/images";
 import { embedUrl, thumbnailUrl, watchUrl } from "@/lib/youtube";
 
 /**
@@ -66,7 +67,7 @@ export function VideoFacade({
             alt=""
             fill
             sizes={sizes}
-            quality={70}
+            quality={IMAGE_QUALITY.content}
             className="vf__img"
             draggable={false}
           />

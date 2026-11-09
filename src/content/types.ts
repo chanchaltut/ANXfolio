@@ -80,6 +80,8 @@ export type Settings = {
   /** Finishes the sentence "40M+ ...", e.g. "on a single American Tourister reel". */
   topVideoLabel: string;
   city: string;
+  /** First-person bio for the "The editor" section. Blank lines split paragraphs. */
+  about: string;
   socials: Socials;
   /** Short video IDs for the hero wall, brightest first. */
   heroWall: string[];

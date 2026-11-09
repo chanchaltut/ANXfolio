@@ -4,10 +4,12 @@ const config: NextConfig = {
   poweredByHeader: false,
   images: {
     remotePatterns: [{ protocol: "https", hostname: "i.ytimg.com" }],
+    // WebP over AVIF on purpose: it decodes faster on low-end phones, which keeps scrolling smooth.
     formats: ["image/webp"],
-    deviceSizes: [640, 828, 1080, 1280],
-    imageSizes: [64, 160, 256, 384, 480],
-    qualities: [55, 70],
+    deviceSizes: [640, 750, 828, 1080, 1280],
+    imageSizes: [64, 128, 256, 384, 480, 560],
+    // Must match IMAGE_QUALITY in src/lib/images.ts.
+    qualities: [50, 85, 90],
     minimumCacheTTL: 60 * 60 * 24 * 30,
   },
   async headers() {

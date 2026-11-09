@@ -1,3 +1,4 @@
+import portrait from "@/assets/ayush/portrait-studio.jpg";
 import { services, site } from "@/content/site";
 import type { Brand, Category, Faq, Video } from "@/content/types";
 import { embedUrl, thumbnailUrl, watchUrl } from "./youtube";
@@ -41,6 +42,7 @@ export function coreGraph(allBrands: Brand[], meta: Meta) {
       name: site.person,
       alternateName: ["ANX", "ANX Production"],
       jobTitle: site.jobTitle,
+      image: `${site.url}${portrait.src}`,
       url: site.url,
       description: meta.description,
       sameAs: meta.sameAs,

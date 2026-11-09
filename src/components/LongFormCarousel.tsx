@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import type { Video } from "@/content/types";
 import { announcePlay } from "@/lib/motion";
+import { IMAGE_QUALITY } from "@/lib/images";
 import { thumbnailUrl } from "@/lib/youtube";
 import { Chevron } from "./Icons";
 import { VideoFacade } from "./VideoFacade";
@@ -48,7 +49,7 @@ export function LongFormCarousel({ videos }: { videos: Video[] }) {
             alt=""
             fill
             sizes="64px"
-            quality={55}
+            quality={IMAGE_QUALITY.blurred}
             className={i === activeUnique ? "is-active" : ""}
           />
         ))}
