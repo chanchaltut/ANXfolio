@@ -58,7 +58,7 @@ All are listed in `.env.example`.
 
 ## Photos
 
-Near-lossless crops of Ayush's photos live in `src/assets/ayush/` and are imported by `src/components/About.tsx` (portrait, still and filmstrip) and the contact section. Next.js serves them as resized WebP with a blur placeholder. The full-size originals are in `photos-original/`, outside `public/`, so they are never published. Crop new ones from there.
+Crops of Ayush's photos live in `src/assets/ayush/` as WebP files named `ayush-nayak-*.webp` (the name ends up in the image URL, which helps image search). They are imported by `src/components/About.tsx` (portrait and ANX still, which swap places when the small one is dragged or tapped) and the contact section (avatar). Next.js serves them as resized WebP with a blur placeholder. The full-size originals are in `photos-original/`, outside `public/`, so they are never published. Crop new ones from there.
 
 The footer credit links to Code Hyphen (`public/brands/code-hyphen.webp`).
 
@@ -79,7 +79,7 @@ All pages read content through `src/lib/content.ts`.
 | Stage | Sections |
 | --- | --- |
 | Attention | Hero fly-through, brand strip |
-| Interest | Manifesto, numbers, short-form reels, long-form intermission |
+| Interest | Manifesto, the editor with his numbers, short-form genres in one tabbed section, long form |
 | Desire | Services, view-count receipts, testimonials |
 | Action | Pricing, FAQ, brief form |
 
@@ -95,7 +95,8 @@ These keep scrolling smooth. Each one was measured, so please keep them when cha
 - Hero wall tiles round the image itself instead of clipping the tile. Clipping cost about 6fps on Intel HD 520.
 - Images: every photo and thumbnail is served as WebP through `next/image`. Quality is set once in `src/lib/images.ts` (85 for thumbnails, 90 for Ayush's photos, 50 only behind heavy blur), picked by measuring SSIM at served sizes. WebP is used over AVIF because it decodes faster on low-end phones.
 - Every `sizes` value matches the rendered width. Too small looks soft, too large wastes data.
-- Photo masters in `src/assets/ayush/` are near-lossless (JPEG q95, 4:4:4) so served images are compressed only once.
+- Photo masters in `src/assets/ayush/` are high-quality WebP (q90 to 92), so the optimizer's re-encode adds little loss. Keep new photos named `ayush-nayak-<what>.webp`.
+- Short-form genres share one tabbed section. Inactive tabs stay in the HTML (`hidden`), so search engines and AI crawlers still see every video. Adding a genre adds a tab, not a screen of scrolling.
 - `MotionEngine` decodes images a screen ahead of the viewport, so first-time decoding does not drop frames.
 
 ## SEO, AEO and GEO

@@ -1,13 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import portrait from "@/assets/ayush/portrait-studio.jpg";
+import avatar from "@/assets/ayush/ayush-nayak-avatar.webp";
 import type { Brand, Category, Faq, PricingTier, Settings, Testimonial, Video } from "@/content/types";
 import { manifesto, services, site } from "@/content/site";
 import { IMAGE_QUALITY } from "@/lib/images";
 import { thumbnailUrl } from "@/lib/youtube";
 import { BrandMark } from "./BrandMark";
 import { ContactForm } from "./ContactForm";
-import { Arrow } from "./Icons";
+import { Arrow, Eye, InstagramGlyph } from "./Icons";
 import { Logo } from "./Logo";
 
 export function Slate({ scene, label }: { scene: string; label: string }) {
@@ -54,26 +54,6 @@ export function Manifesto() {
   );
 }
 
-export function Stats({ videoCount, genreCount, settings }: { videoCount: number; genreCount: number; settings: Settings }) {
-  const items = [
-    { value: settings.totalViews, label: "views across Instagram" },
-    { value: settings.topVideoViews, label: settings.topVideoLabel },
-    { value: String(videoCount), label: "edits in this portfolio" },
-    { value: String(genreCount), label: "genres and counting" },
-  ].filter((item) => item.value && item.label);
-  return (
-    <section className="stats wrap" aria-label="Portfolio numbers">
-      <dl className="stats__grid">
-        {items.map((item, i) => (
-          <div key={item.label} className="stats__item" data-reveal style={{ "--d": `${i * 70}ms` } as React.CSSProperties}>
-            <dt>{item.label}</dt>
-            <dd data-count>{item.value}</dd>
-          </div>
-        ))}
-      </dl>
-    </section>
-  );
-}
 
 export function WorkIntro() {
   return (
@@ -89,7 +69,7 @@ export function WorkIntro() {
 export function LongFormIntro() {
   return (
     <header className="longintro wrap" data-reveal>
-      <Slate scene="03" label="Intermission" />
+      <Slate scene="03" label="Long form" />
       <h2 className="h2 h2--center">
         Long <em>Form</em>
       </h2>
@@ -100,23 +80,6 @@ export function LongFormIntro() {
   );
 }
 
-export function NextUp({ items }: { items: Category[] }) {
-  return (
-    <section className="nextup wrap" aria-label="More genres coming soon">
-      <div className="nextup__grid">
-        {items.map((item, i) => (
-          <article key={item.slug} className={`nextup__card nextup__card--${i}`} data-reveal>
-            <p className="nextup__status">
-              <i /> In the edit
-            </p>
-            <h3>{item.label}</h3>
-            <p>{item.blurb}</p>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
 
 export function MidCta() {
   return (
@@ -210,7 +173,10 @@ export function Testimonials({
               <span className="receipt__views" data-count>
                 {video.views}
               </span>
-              <span className="receipt__meta">views on {video.viewsSource}</span>
+              <span className="receipt__meta">
+                <Eye size={14} /> views on {video.viewsSource}
+                {/insta/i.test(video.viewsSource ?? "") && <InstagramGlyph size={14} />}
+              </span>
               {brand && <BrandMark brand={brand} />}
             </li>
           );
@@ -327,8 +293,7 @@ export function Contact({
           <p className="lede">Send the footage, the idea or just the deadline. I&rsquo;ll tell you what the edit should be.</p>
           <div className="contact__me">
             <span className="contact__avatar">
-              {/* Scaled 1.8x in CSS to frame the face, so it needs about 100px of pixels. */}
-              <Image src={portrait} alt="" fill sizes="100px" quality={IMAGE_QUALITY.photo} />
+              <Image src={avatar} alt="" fill sizes="56px" quality={IMAGE_QUALITY.photo} />
             </span>
             <p>
               <b>Ayush Nayak</b>
@@ -365,6 +330,9 @@ export function Footer({
 }) {
   return (
     <footer className="footer">
+      <div className="footer__mark" aria-hidden="true">
+        <Logo />
+      </div>
       <div className="wrap footer__grid">
         <div>
           <p className="footer__blurb">
@@ -393,9 +361,6 @@ export function Footer({
             </a>
           ))}
         </nav>
-      </div>
-      <div className="footer__logo" aria-hidden="true" data-speed="-0.06">
-        <Logo />
       </div>
       <div className="footer__legal wrap">
         <p>

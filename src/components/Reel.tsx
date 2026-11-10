@@ -19,7 +19,7 @@ export function Reel({
 }) {
   return (
     <section className="reel" id={category.slug} aria-labelledby={`${category.slug}-title`}>
-      <span className="reel__ghost" data-drift="-0.14" aria-hidden="true">
+      <span className="reel__ghost" aria-hidden="true">
         {category.label}
       </span>
       <header className="reel__head wrap" data-reveal>

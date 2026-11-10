@@ -1,4 +1,4 @@
-import portrait from "@/assets/ayush/portrait-studio.jpg";
+import portrait from "@/assets/ayush/ayush-nayak-video-editor.webp";
 import { services, site } from "@/content/site";
 import type { Brand, Category, Faq, Video } from "@/content/types";
 import { embedUrl, thumbnailUrl, watchUrl } from "./youtube";

@@ -1,6 +1,6 @@
 # ANX Portfolio: Progress
 
-Last updated: 2026-11-09
+Last updated: 2026-11-10
 
 Portfolio for Ayush Nayak (ANX), video editor. Source brief: `Portfolio Structure.pdf`.
 
@@ -22,7 +22,7 @@ Nothing is committed. The folder is not a git repository yet. No server is left 
 ## Done
 
 - Next.js (App Router) and TypeScript, production build passing with no warnings
-- Home page: hero fly-through, brand strip, manifesto, numbers, short-form reels, long-form intermission, services, view-count receipts, testimonials, pricing, FAQ, contact form, footer
+- Home page: hero fly-through, brand strip, manifesto, the editor (with numbers), short-form genres in one tabbed section, long form, services, view-count receipts, testimonials, pricing, FAQ, contact form, footer
 - Timeline dock, genre pages at `/work/[slug]`, SEO, AEO and GEO (JSON-LD, video sitemap, `/llms.txt`, share image)
 - **Admin at `/admin`** (2026-11-09): videos (add by YouTube link with automatic title, date and thumbnail check), genres, brands with logo upload, testimonials, pricing, settings, inbox, backup and restore
 - **Contact form** saves each brief to the admin inbox and emails it when Resend is configured. Validation, spam traps and rate limiting included
@@ -36,6 +36,23 @@ Nothing is committed. The folder is not a git repository yet. No server is left 
 - Footer credit: "Designed & built by Code Hyphen", linking to codehyphen.in. The same logo now fills the Code Hyphen client logo in the brand strip
 - Image quality pass (2026-11-09): WebP quality raised from 55/70 to 85 (thumbnails) and 90 (photos), photo masters rebuilt near-lossless, wrong `sizes` fixed on the hero wall, avatar and filmstrip, images decoded ahead of the viewport
 - Original photos moved from `public/` to `photos-original/` (23 MB, including one with an ID badge), so they are not published. Web crops are in `src/assets/ayush/`
+
+- **Brief revision** (2026-11-10, new `Portfolio Structure.pdf`):
+  - Colour Grading is live with 5 videos
+  - Fashion Films 01 is now `7z1UyOleNJ0`, the Miss Universe India finalist film
+  - Unicorn Store logo added from unicornstore.in
+  - View counts show an eye icon and an Instagram glyph
+  - A one-off migration in `src/lib/content.ts` applies these changes to content already saved in the admin
+- **Layout pass** (2026-11-10):
+  - The "Off the timeline" filmstrip is removed
+  - The numbers row is merged into the About section
+  - The six short-form reels are now one tabbed section, with UGC shown as a "Soon" chip
+  - The footer ANX is a faded watermark behind the footer
+  - The page went from 22.4 to 15.3 screens at 1366×768, even with Colour Grading added
+- **Photos** (2026-11-10):
+  - New portrait cropped to the face from `photos-original/AyushNayak.png`. It replaces `1779987388694.png`
+  - The portrait and the ANX still swap places when the small one is dragged onto the big one or tapped
+  - All photos are now WebP files named `ayush-nayak-*.webp`, and the contact section has its own avatar crop
 
 ## Test results (2026-11-09)
 
@@ -70,12 +87,12 @@ The admin Overview page shows this as a checklist.
 - [ ] Inbox email (Settings)
 - [ ] Instagram link and city (Settings)
 - [ ] Real testimonials (Testimonials)
-- [ ] Logos for Smirnoff, Black & White, HAPUSA and Unicorn Store (Brands)
+- [ ] Logos for Smirnoff, Black & White and HAPUSA (Brands). These brands don't publish a logo file, so they still show as text
 - [ ] Check the bio under Settings → About you. It is a draft written from the brief
 - [ ] View counts for the other videos (Videos)
 - [ ] Better titles for the generic "Fashion film edit 01" style videos (Videos)
 - [ ] Prices, if he wants them shown (Pricing)
-- [ ] Colour Grading and UGC videos, then set those genres live (Videos, Genres)
+- [ ] UGC videos, then set that genre live (Videos, Genres)
 
 ## Open questions
 

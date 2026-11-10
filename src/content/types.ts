@@ -95,6 +95,8 @@ export type Content = {
   testimonials: Testimonial[];
   pricing: PricingTier[];
   updatedAt?: string;
+  /** Content migrations already applied to this stored copy. See MIGRATIONS in src/lib/content.ts. */
+  migrations?: string[];
 };
 
 export type Brief = {

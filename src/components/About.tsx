@@ -1,54 +1,38 @@
-import Image, { type StaticImageData } from "next/image";
-import forest from "@/assets/ayush/frame-forest.jpg";
-import lights from "@/assets/ayush/frame-lights.jpg";
-import night from "@/assets/ayush/frame-night.jpg";
-import road from "@/assets/ayush/frame-road.jpg";
-import windowLight from "@/assets/ayush/frame-window.jpg";
-import still from "@/assets/ayush/portrait-anx.jpg";
-import studio from "@/assets/ayush/portrait-studio.jpg";
+import still from "@/assets/ayush/ayush-nayak-anx-production.webp";
+import portrait from "@/assets/ayush/ayush-nayak-video-editor.webp";
 import type { Settings } from "@/content/types";
-import { IMAGE_QUALITY } from "@/lib/images";
 import { Arrow } from "./Icons";
+import { PhotoSwap } from "./PhotoSwap";
 import { Slate } from "./Sections";
 
-const FRAMES: { src: StaticImageData; alt: string; clip: string }[] = [
-  { src: lights, alt: "Ayush Nayak under stage lights at a night event", clip: "A002_C014" },
-  { src: forest, alt: "Ayush Nayak in an orange jacket among trees", clip: "A002_C021" },
-  { src: windowLight, alt: "Ayush Nayak in a checked shirt in warm evening light", clip: "A003_C007" },
-  { src: road, alt: "Ayush Nayak smiling by the road", clip: "A003_C019" },
-  { src: night, alt: "Ayush Nayak between white pillars at night", clip: "A004_C002" },
-];
-
-/** The person behind the edits: portrait in a camera viewfinder, a bio, and a drifting filmstrip. */
-export function About({ settings }: { settings: Settings }) {
+/** The person behind the edits: swappable photos, a bio and the headline numbers. */
+export function About({
+  settings,
+  videoCount,
+  genreCount,
+}: {
+  settings: Settings;
+  videoCount: number;
+  genreCount: number;
+}) {
   const paragraphs = settings.about.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
-  // Two runs of the same frames, so the strip never shows an edge while it drifts.
-  const strip = [...FRAMES, ...FRAMES];
+  const stats = [
+    { value: settings.totalViews, label: "views across Instagram" },
+    { value: settings.topVideoViews, label: settings.topVideoLabel },
+    { value: String(videoCount), label: "edits in this portfolio" },
+    { value: String(genreCount), label: "genres and counting" },
+  ].filter((item) => item.value && item.label);
 
   return (
     <section className="about" id="about" data-clip="Editor" aria-labelledby="about-title">
       <div className="wrap about__grid">
         <div className="about__media" data-reveal>
-          <figure className="about__portrait">
-            <Image
-              src={studio}
-              alt="Portrait of Ayush Nayak, video editor"
-              placeholder="blur"
-              sizes="(max-width: 700px) 80vw, 460px"
-              quality={IMAGE_QUALITY.photo}
-            />
-            <span className="vfinder" aria-hidden="true">
-              <i />
-              <i />
-              <i />
-              <i />
-              <b className="vfinder__rec">REC</b>
-              <span className="vfinder__clip">A001_C001</span>
-            </span>
-          </figure>
-          <figure className="about__still" data-speed="-0.06">
-            <Image src={still} alt="" placeholder="blur" sizes="(max-width: 700px) 42vw, 230px" quality={IMAGE_QUALITY.photo} />
-          </figure>
+          <PhotoSwap
+            photos={[
+              { src: portrait, alt: "Ayush Nayak, video editor and colourist behind ANX", position: "50% 30%" },
+              { src: still, alt: "Ayush Nayak on an ANX Production poster" },
+            ]}
+          />
         </div>
 
         <div className="about__copy" data-reveal style={{ "--d": "120ms" } as React.CSSProperties}>
@@ -64,6 +48,18 @@ export function About({ settings }: { settings: Settings }) {
           <p className="about__sign">
             Ayush Nayak <span>/ ANX</span>
           </p>
+
+          {stats.length > 0 && (
+            <dl className="stats__grid" aria-label="Portfolio numbers">
+              {stats.map((item) => (
+                <div key={item.label} className="stats__item">
+                  <dt>{item.label}</dt>
+                  <dd data-count>{item.value}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+
           <div className="about__cta">
             <a href="#work" className="btn btn--cyan btn--lg">
               Watch the work <Arrow />
@@ -74,29 +70,6 @@ export function About({ settings }: { settings: Settings }) {
               </a>
             )}
           </div>
-        </div>
-      </div>
-
-      <p className="filmstrip__label wrap" aria-hidden="true">
-        <i /> Off the timeline
-      </p>
-      <div className="filmstrip" role="group" aria-label="Off the timeline: photos of Ayush">
-        <div className="filmstrip__run" data-drift="-0.1">
-          {strip.map((frame, i) => (
-            <figure key={i} className="filmstrip__frame" aria-hidden={i >= FRAMES.length || undefined}>
-              <Image
-                src={frame.src}
-                alt={i < FRAMES.length ? frame.alt : ""}
-                placeholder="blur"
-                sizes="(max-width: 789px) 134px, (max-width: 1420px) 19vw, 254px"
-                quality={IMAGE_QUALITY.photo}
-              />
-              <figcaption aria-hidden="true">
-                <span>{frame.clip}</span>
-                <span>{String((i % FRAMES.length) + 1).padStart(2, "0")}</span>
-              </figcaption>
-            </figure>
-          ))}
         </div>
       </div>
     </section>

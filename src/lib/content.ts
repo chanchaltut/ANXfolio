@@ -10,23 +10,63 @@ import { store } from "@/lib/store";
 
 const clone = <T,>(value: T): T => structuredClone(value);
 
+/**
+ * One-off updates for copies saved in the admin before a content change shipped in code.
+ * Each runs on read until the admin's next save stores its id, so it never undoes a later edit.
+ */
+const MIGRATIONS: { id: string; apply: (content: Content) => void }[] = [
+  {
+    // Brief revision of 2026-11-10: Colour Grading goes live, Fashion Films 01 replaced, Unicorn logo.
+    id: "2026-11-colour-grading",
+    apply: (content) => {
+      const seedGenre = seedContent.categories.find((c) => c.slug === "colour-grading")!;
+      const genre = content.categories.find((c) => c.slug === seedGenre.slug);
+      if (genre) Object.assign(genre, { ...seedGenre, label: genre.label, comingSoon: undefined });
+      else content.categories.push(clone(seedGenre));
+
+      const have = new Set(content.videos.map((v) => v.id));
+      const replaced = content.videos.findIndex((v) => v.id === "pdQ4ykWxGG0");
+      const fashion = seedContent.videos.find((v) => v.id === "7z1UyOleNJ0")!;
+      if (replaced >= 0 && !have.has(fashion.id)) content.videos[replaced] = clone(fashion);
+      for (const video of seedContent.videos)
+        if (video.category === seedGenre.slug && !have.has(video.id)) content.videos.push(clone(video));
+
+      const unicorn = content.brands.find((b) => b.id === "unicorn");
+      const seedUnicorn = seedContent.brands.find((b) => b.id === "unicorn");
+      if (unicorn && !unicorn.logo && seedUnicorn?.logo) unicorn.logo = { ...seedUnicorn.logo };
+    },
+  },
+];
+
+function migrate(content: Content): Content {
+  const done = new Set(content.migrations ?? []);
+  for (const migration of MIGRATIONS) {
+    if (done.has(migration.id)) continue;
+    migration.apply(content);
+    done.add(migration.id);
+  }
+  content.migrations = [...done];
+  return content;
+}
+
 /** Fills fields added after content was first saved, so older stored copies keep working. */
 export function normalize(stored: Content | null): Content {
-  if (!stored) return clone(seedContent);
+  if (!stored) return { ...clone(seedContent), migrations: MIGRATIONS.map((m) => m.id) };
   const settings: Settings = {
     ...seedContent.settings,
     ...stored.settings,
     socials: { ...seedContent.settings.socials, ...stored.settings?.socials },
   };
-  return {
+  return migrate({
     settings,
-    categories: stored.categories ?? clone(seedContent.categories),
-    videos: stored.videos ?? clone(seedContent.videos),
-    brands: stored.brands ?? clone(seedContent.brands),
+    categories: clone(stored.categories ?? seedContent.categories),
+    videos: clone(stored.videos ?? seedContent.videos),
+    brands: clone(stored.brands ?? seedContent.brands),
     testimonials: stored.testimonials ?? clone(seedContent.testimonials),
     pricing: stored.pricing ?? clone(seedContent.pricing),
     updatedAt: stored.updatedAt,
-  };
+    migrations: stored.migrations,
+  });
 }
 
 /** Deduplicated per request. A storage outage falls back to the seed instead of taking the site down. */

@@ -1,5 +1,6 @@
 import type { Brand, Video } from "@/content/types";
 import { BrandMark } from "./BrandMark";
+import { ViewCount } from "./Icons";
 import { Logo } from "./Logo";
 import { VideoFacade } from "./VideoFacade";
 
@@ -26,12 +27,7 @@ export function VideoCard({
             <span>{video.title}</span>
           </span>
         )}
-        {video.views && (
-          <span className="vcard__views" title={`${video.views} views on ${video.viewsSource}`}>
-            {video.views}
-            <span className="sr-only"> views on {video.viewsSource}</span>
-          </span>
-        )}
+        {video.views && <ViewCount views={video.views} source={video.viewsSource} />}
       </footer>
     </article>
   );

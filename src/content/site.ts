@@ -39,7 +39,7 @@ export const seedSettings: Settings = {
 
 export function describe(settings: Settings) {
   const reach = settings.totalViews ? `, with ${settings.totalViews} views across Instagram` : "";
-  return `${site.person} (ANX) is a video editor for brands and creators, cutting brand promos, fashion films, jewellery, food and beverage reels and long-form stories${reach}.`;
+  return `${site.person} (ANX) is a video editor for brands and creators, cutting and colour grading brand promos, fashion films, jewellery, food and beverage reels and long-form stories${reach}.`;
 }
 
 /** Profile links for the Person schema and the footer. Empty entries are skipped. */
@@ -79,7 +79,7 @@ export const services: Service[] = [
     title: "Fashion Films",
     description: "Cinematic pacing and luxury visuals for labels, models and campaigns.",
     categorySlug: "fashion-films",
-    thumbnailId: "pdQ4ykWxGG0",
+    thumbnailId: "7z1UyOleNJ0",
   },
   {
     title: "Food & Beverage",
@@ -101,8 +101,9 @@ export const services: Service[] = [
   },
   {
     title: "Colour Grading & UGC",
-    description: "Finishing looks and creator-style edits that feel native to the feed.",
-    thumbnailId: "mrXL3Uaj5Ms",
+    description: "Cinematic looks graded shot by shot, plus creator-style edits that feel native to the feed.",
+    categorySlug: "colour-grading",
+    thumbnailId: "k04EfjVJbTU",
   },
 ];
 
@@ -167,12 +168,12 @@ export function buildFaqs(settings: Settings, brands: Brand[]): Faq[] {
   return [
     {
       question: "Who is Ayush Nayak?",
-      answer: `Ayush Nayak is a video editor who works under the name ANX, with work published on the ANX Production YouTube channel. The portfolio spans brand promos, fashion films, jewellery, food and beverage reels, luxury lifestyle edits and long-form stories${reach}.`,
+      answer: `Ayush Nayak is a video editor who works under the name ANX, with work published on the ANX Production YouTube channel. The portfolio spans brand promos, fashion films, jewellery, food and beverage reels, luxury lifestyle edits, colour grading and long-form stories${reach}.`,
     },
     {
       question: "What kinds of videos does ANX edit?",
       answer:
-        "ANX edits vertical short-form video and long-form video. Short-form genres include brand promos, fashion films, jewellery promotions, restaurant and beverage promos, and luxury and spiritual lifestyle content. Colour grading and UGC edits are also available.",
+        "ANX edits vertical short-form video and long-form video. Short-form genres include brand promos, fashion films, jewellery promotions, restaurant and beverage promos, luxury and spiritual lifestyle content, and colour grading. UGC edits are also available.",
     },
     ...(brandText
       ? [{ question: "Which brands has ANX edited videos for?", answer: `The ANX portfolio includes videos for ${brandText}.` }]

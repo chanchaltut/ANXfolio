@@ -78,7 +78,7 @@ export function MotionEngine() {
     const loopObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => entry.target.classList.toggle("is-paused", !entry.isIntersecting));
     });
-    document.querySelectorAll(".hero__stage,.marquee,.nextup,.about").forEach((el) => loopObserver.observe(el));
+    document.querySelectorAll(".hero__stage,.marquee,.about").forEach((el) => loopObserver.observe(el));
 
     const parallax: Parallax[] = [];
     document.querySelectorAll<HTMLElement>("[data-speed],[data-drift]").forEach((el) => {

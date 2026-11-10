@@ -17,7 +17,11 @@ export const brands: Brand[] = [
   { id: "smirnoff", name: "Smirnoff" },
   { id: "black-white", name: "Black & White" },
   { id: "hapusa", name: "HAPUSA" },
-  { id: "unicorn", name: "Unicorn Store × iPhone" },
+  {
+    id: "unicorn",
+    name: "Unicorn Store × iPhone",
+    logo: { src: "/brands/unicorn-store.webp", width: 170, height: 150 },
+  },
   { id: "code-hyphen", name: "Code Hyphen", logo: { src: "/brands/code-hyphen.webp", width: 228, height: 78 } },
 ];
 
@@ -79,11 +83,11 @@ export const categories: Category[] = [
   {
     slug: "colour-grading",
     label: "Colour Grading",
-    blurb: "Looks, tone and mood, shot by shot.",
-    seoTitle: "Colour Grading",
-    seoDescription: "Colour grading work by Ayush Nayak (ANX).",
+    blurb: "Looks, tone and mood, built shot by shot.",
+    seoTitle: "Colour Grading for Reels & Brand Films",
+    seoDescription:
+      "Colour grading by Ayush Nayak (ANX): cinematic looks, skin tones and mood, graded shot by shot for reels and brand films.",
     format: "short",
-    comingSoon: true,
   },
   {
     slug: "ugc-edits",
@@ -175,11 +179,11 @@ export const videos: Video[] = [
 
   // Fashion films
   {
-    id: "pdQ4ykWxGG0",
+    id: "7z1UyOleNJ0",
     format: "short",
     category: "fashion-films",
-    title: "Fashion film edit 01",
-    uploadDate: "2026-08-31T23:41:14-07:00",
+    title: "Miss Universe India finalist fashion film",
+    uploadDate: "2026-11-09T12:42:22-08:00",
   },
   {
     id: "6dlD_IiXGdk",
@@ -311,5 +315,42 @@ export const videos: Video[] = [
     category: "luxury-spiritual-lifestyle",
     title: "Filter coffee candle set edit",
     uploadDate: "2026-11-02T21:57:50-08:00",
+  },
+
+  // Colour grading
+  {
+    id: "k04EfjVJbTU",
+    format: "short",
+    category: "colour-grading",
+    title: "Colour grading reel 01",
+    uploadDate: "2026-11-09T12:16:03-08:00",
+  },
+  {
+    id: "eUAwjrmAy3w",
+    format: "short",
+    category: "colour-grading",
+    title: "Colour grading reel 02",
+    uploadDate: "2026-11-09T12:16:24-08:00",
+  },
+  {
+    id: "BhVvvtDMUSA",
+    format: "short",
+    category: "colour-grading",
+    title: "Colour grading reel 03",
+    uploadDate: "2026-11-09T12:16:39-08:00",
+  },
+  {
+    id: "qHBxV8fQZrQ",
+    format: "short",
+    category: "colour-grading",
+    title: "Colour grading reel 04",
+    uploadDate: "2026-11-09T12:16:48-08:00",
+  },
+  {
+    id: "P1A7_3bjU20",
+    format: "short",
+    category: "colour-grading",
+    title: "Colour grading reel 05",
+    uploadDate: "2026-11-09T12:17:03-08:00",
   },
 ];
