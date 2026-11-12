@@ -1,5 +1,5 @@
 import portrait from "@/assets/ayush/ayush-nayak-video-editor.webp";
-import { services, site } from "@/content/site";
+import { phoneLinks, services, site } from "@/content/site";
 import type { Brand, Category, Faq, Video } from "@/content/types";
 import { embedUrl, thumbnailUrl, watchUrl } from "./youtube";
 
@@ -23,9 +23,10 @@ export function videoObject(video: Video, brand?: Brand) {
   };
 }
 
-type Meta = { description: string; sameAs: string[]; city?: string; email?: string };
+type Meta = { description: string; sameAs: string[]; city?: string; email?: string; phone?: string };
 
 export function coreGraph(allBrands: Brand[], meta: Meta) {
+  const telephone = phoneLinks(meta.phone ?? "")?.tel.replace("tel:", "");
   return [
     {
       "@type": "WebSite",
@@ -54,10 +55,12 @@ export function coreGraph(allBrands: Brand[], meta: Meta) {
               "@type": "ContactPoint",
               contactType: "Bookings and project enquiries",
               email: meta.email,
+              ...(telephone ? { telephone } : {}),
               url: `${site.url}/#contact`,
             },
           }
         : {}),
+      ...(telephone ? { telephone } : {}),
       ...(meta.city ? { address: { "@type": "PostalAddress", addressLocality: meta.city } } : {}),
       knowsAbout: [
         "Video editing",
@@ -80,6 +83,7 @@ export function coreGraph(allBrands: Brand[], meta: Meta) {
       image: `${site.url}/opengraph-image.jpg`,
       description: meta.description,
       ...(meta.email ? { email: meta.email } : {}),
+      ...(telephone ? { telephone } : {}),
       founder: { "@id": personId() },
       hasOfferCatalog: {
         "@type": "OfferCatalog",

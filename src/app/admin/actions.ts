@@ -436,6 +436,8 @@ export async function updateSettings(_prev: Result, form: FormData): Promise<Res
   return mutate((content) => {
     const email = text(form, "email", 200);
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return "That email address does not look right.";
+    const phone = text(form, "phone", 20);
+    if (phone && !/^\+\d[\d\s-]{7,18}$/.test(phone)) return "Write the phone number with its country code, e.g. +91 80932 67071.";
     const socials = { ...content.settings.socials };
     for (const key of Object.keys(socials) as (keyof typeof socials)[]) {
       const value = text(form, key, 300);
@@ -445,6 +447,7 @@ export async function updateSettings(_prev: Result, form: FormData): Promise<Res
     content.settings = {
       ...content.settings,
       email,
+      phone: phone.replace(/[\s-]/g, ""),
       totalViews: text(form, "totalViews", 20),
       topVideoViews: text(form, "topVideoViews", 20),
       topVideoLabel: text(form, "topVideoLabel", 80),

@@ -75,6 +75,8 @@ export type Socials = {
 export type Settings = {
   /** Public contact email. Shown on the site and in structured data, and new briefs are sent to it. */
   email: string;
+  /** Public mobile number with country code, e.g. +918093267071. Used for both calls and WhatsApp. */
+  phone: string;
   totalViews: string;
   topVideoViews: string;
   /** Finishes the sentence "40M+ ...", e.g. "on a single American Tourister reel". */

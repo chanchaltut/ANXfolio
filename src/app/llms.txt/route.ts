@@ -1,4 +1,4 @@
-import { services, site } from "@/content/site";
+import { phoneLinks, services, site } from "@/content/site";
 import { getBrands, getLiveCategories, getSiteMeta, getVideos } from "@/lib/content";
 import { watchUrl } from "@/lib/youtube";
 
@@ -8,6 +8,7 @@ export const dynamic = "force-static";
 export async function GET() {
   const [categories, videos, brands, meta] = await Promise.all([getLiveCategories(), getVideos(), getBrands(), getSiteMeta()]);
   const { settings, faqs, links } = meta;
+  const phone = phoneLinks(settings.phone);
 
   const body = [
     `# ${site.person} (ANX)`,
@@ -40,6 +41,7 @@ export async function GET() {
     "## Hire or contact",
     `- Send a brief: ${site.url}/#contact`,
     ...(settings.email ? [`- Email: ${settings.email}`] : []),
+    ...(phone ? [`- Phone: ${phone.display}`, `- WhatsApp: ${phone.whatsapp}`] : []),
     "",
     "## FAQ",
     ...faqs.flatMap((f) => [`### ${f.question}`, f.answer, ""]),

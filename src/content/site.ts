@@ -21,6 +21,7 @@ export const shareImage = {
 
 export const seedSettings: Settings = {
   email: "ayushnayakinfo@gmail.com",
+  phone: "+918093267071",
   totalViews: "45M+",
   topVideoViews: "40M+",
   topVideoLabel: "on a single American Tourister reel",
@@ -28,9 +29,9 @@ export const seedSettings: Settings = {
   about:
     "I'm Ayush Nayak, and ANX is the name on my edits. I cut brand promos, fashion films, jewellery, food and beverage reels and long-form stories for brands and creators.\n\nEvery edit starts with one question: why would anyone keep watching? Pacing, sound and colour are how I answer it.",
   socials: {
-    instagram: "",
+    instagram: "https://www.instagram.com/anxproduction__",
     youtube: "https://www.youtube.com/@Anx.Production",
-    linkedin: "",
+    linkedin: "https://www.linkedin.com/in/ayush-nayak-382860246",
     behance: "",
     x: "",
   },
@@ -45,6 +46,15 @@ export const seedSettings: Settings = {
 export function describe(settings: Settings) {
   const reach = settings.totalViews ? `, with ${settings.totalViews} views across Instagram` : "";
   return `${site.person} (ANX) is a video editor for brands and creators, cutting and colour grading brand promos, fashion films, jewellery, food and beverage reels and long-form stories${reach}.`;
+}
+
+/** Call and WhatsApp links for the one public number. Returns null when no number is set. */
+export function phoneLinks(phone: string) {
+  const digits = phone.replace(/\D/g, "");
+  if (digits.length < 8) return null;
+  // Indian mobile numbers read best as +91 XXXXX XXXXX. Anything else is shown as typed.
+  const display = /^91\d{10}$/.test(digits) ? `+91 ${digits.slice(2, 7)} ${digits.slice(7)}` : phone.trim();
+  return { display, tel: `tel:+${digits}`, whatsapp: `https://wa.me/${digits}` };
 }
 
 /** Profile links for the Person schema and the footer. Empty entries are skipped. */
@@ -170,6 +180,7 @@ export function buildFaqs(settings: Settings, brands: Brand[]): Faq[] {
   const brandText =
     brandList.length > 1 ? `${brandList.slice(0, -1).join(", ")} and ${brandList[brandList.length - 1]}` : brandList[0];
   const channel = settings.socials.youtube.replace(/^https?:\/\/(www\.)?/, "");
+  const phone = phoneLinks(settings.phone);
   return [
     {
       question: "Who is Ayush Nayak?",
@@ -214,7 +225,7 @@ export function buildFaqs(settings: Settings, brands: Brand[]): Faq[] {
       question: "How do I hire ANX?",
       answer: `Fill in the contact form on ${site.domain} with your brand, the type of video and a link to your footage or references${
         settings.email ? `, or email ${settings.email}` : ""
-      }. Mention the deadline if you have one.`,
+      }${phone ? `, or call or WhatsApp ${phone.display}` : ""}. Mention the deadline if you have one.`,
     },
   ];
 }

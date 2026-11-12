@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import avatar from "@/assets/ayush/ayush-nayak-avatar.webp";
 import type { Brand, Category, Faq, PricingTier, Settings, Testimonial, Video } from "@/content/types";
-import { manifesto, services, site } from "@/content/site";
+import { manifesto, phoneLinks, services, site } from "@/content/site";
 import { IMAGE_QUALITY } from "@/lib/images";
 import { thumbnailUrl } from "@/lib/youtube";
 import { BrandMark } from "./BrandMark";
@@ -282,6 +282,7 @@ export function Contact({
     : settings.socials.youtube
       ? { label: "YouTube", href: settings.socials.youtube }
       : null;
+  const phone = phoneLinks(settings.phone);
   return (
     <section className="contact" id="contact" data-clip="Hire" aria-labelledby="contact-title">
       <div className="wrap contact__grid">
@@ -300,11 +301,21 @@ export function Contact({
               <span>Every brief comes straight to me.</span>
             </p>
           </div>
-          {(settings.email || social) && (
+          {(settings.email || phone || social) && (
             <p className="contact__links">
               {settings.email && (
                 <a className="textlink" href={`mailto:${settings.email}`}>
                   {settings.email}
+                </a>
+              )}
+              {phone && (
+                <a className="textlink" href={phone.tel}>
+                  {phone.display}
+                </a>
+              )}
+              {phone && (
+                <a className="textlink" href={phone.whatsapp} target="_blank" rel="noopener">
+                  WhatsApp <Arrow />
                 </a>
               )}
               {social && (
@@ -337,6 +348,7 @@ export function Footer({
   meta: { settings: Settings; links: { key: string; label: string; href: string }[] };
   base?: string;
 }) {
+  const phone = phoneLinks(meta.settings.phone);
   return (
     <footer className="footer">
       <div className="footer__mark" aria-hidden="true">
@@ -353,6 +365,16 @@ export function Footer({
             <a className="textlink footer__mail" href={`mailto:${meta.settings.email}`}>
               {meta.settings.email}
             </a>
+          )}
+          {phone && (
+            <p className="footer__phone">
+              <a className="textlink" href={phone.tel}>
+                {phone.display}
+              </a>
+              <a className="textlink" href={phone.whatsapp} target="_blank" rel="noopener">
+                WhatsApp
+              </a>
+            </p>
           )}
         </div>
         <nav aria-label="Genres">

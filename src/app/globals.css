@@ -1952,6 +1952,12 @@ div.svc__row:hover {
   margin-top: 16px;
   overflow-wrap: anywhere;
 }
+.footer__phone {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  margin-top: 14px;
+}
 .footer nav {
   display: flex;
   flex-direction: column;

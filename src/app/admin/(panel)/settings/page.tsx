@@ -22,6 +22,9 @@ export default async function SettingsPage() {
           <Field label="Contact email" hint="Shown publicly on the site. New briefs are also emailed here when email delivery is set up.">
             <input name="email" type="email" defaultValue={settings.email} maxLength={200} placeholder="you@example.com" />
           </Field>
+          <Field label="Phone / WhatsApp" hint="Shown publicly as a call link and a WhatsApp link. Include the country code. Leave empty to hide.">
+            <input name="phone" type="tel" defaultValue={settings.phone} maxLength={20} placeholder="+91 98765 43210" />
+          </Field>
           <Field label="City" hint="Optional. Helps local search, e.g. Mumbai.">
             <input name="city" defaultValue={settings.city} maxLength={80} />
           </Field>

@@ -43,6 +43,17 @@ const MIGRATIONS: { id: string; apply: (content: Content) => void }[] = [
       if (!content.settings.email) content.settings.email = seedContent.settings.email;
     },
   },
+  {
+    // 2026-11-13: Instagram, LinkedIn and the call/WhatsApp number, unless already saved.
+    id: "2026-11-socials-phone",
+    apply: (content) => {
+      const { settings } = content;
+      const seed = seedContent.settings;
+      if (!settings.phone) settings.phone = seed.phone;
+      if (!settings.socials.instagram) settings.socials.instagram = seed.socials.instagram;
+      if (!settings.socials.linkedin) settings.socials.linkedin = seed.socials.linkedin;
+    },
+  },
 ];
 
 function migrate(content: Content): Content {
