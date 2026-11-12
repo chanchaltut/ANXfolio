@@ -36,6 +36,13 @@ const MIGRATIONS: { id: string; apply: (content: Content) => void }[] = [
       if (unicorn && !unicorn.logo && seedUnicorn?.logo) unicorn.logo = { ...seedUnicorn.logo };
     },
   },
+  {
+    // Domain launch of 2026-11-12: the official contact email, unless one was already saved.
+    id: "2026-11-public-email",
+    apply: (content) => {
+      if (!content.settings.email) content.settings.email = seedContent.settings.email;
+    },
+  },
 ];
 
 function migrate(content: Content): Content {

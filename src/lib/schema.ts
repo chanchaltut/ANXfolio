@@ -23,7 +23,7 @@ export function videoObject(video: Video, brand?: Brand) {
   };
 }
 
-type Meta = { description: string; sameAs: string[]; city?: string };
+type Meta = { description: string; sameAs: string[]; city?: string; email?: string };
 
 export function coreGraph(allBrands: Brand[], meta: Meta) {
   return [
@@ -34,6 +34,7 @@ export function coreGraph(allBrands: Brand[], meta: Meta) {
       name: `${site.person} (${site.name}) | ${site.jobTitle}`,
       description: meta.description,
       inLanguage: "en",
+      image: `${site.url}/opengraph-image.jpg`,
       publisher: { "@id": personId() },
     },
     {
@@ -46,6 +47,17 @@ export function coreGraph(allBrands: Brand[], meta: Meta) {
       url: site.url,
       description: meta.description,
       sameAs: meta.sameAs,
+      ...(meta.email
+        ? {
+            email: meta.email,
+            contactPoint: {
+              "@type": "ContactPoint",
+              contactType: "Bookings and project enquiries",
+              email: meta.email,
+              url: `${site.url}/#contact`,
+            },
+          }
+        : {}),
       ...(meta.city ? { address: { "@type": "PostalAddress", addressLocality: meta.city } } : {}),
       knowsAbout: [
         "Video editing",
@@ -65,7 +77,9 @@ export function coreGraph(allBrands: Brand[], meta: Meta) {
       "@id": serviceId(),
       name: "ANX Video Editing",
       url: site.url,
+      image: `${site.url}/opengraph-image.jpg`,
       description: meta.description,
+      ...(meta.email ? { email: meta.email } : {}),
       founder: { "@id": personId() },
       hasOfferCatalog: {
         "@type": "OfferCatalog",

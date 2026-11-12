@@ -1773,8 +1773,14 @@ div.svc__row:hover {
   font-weight: 600;
   text-wrap: balance;
 }
-.contact .textlink {
+.contact__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 28px;
   margin-top: 26px;
+}
+.contact__links .textlink {
+  overflow-wrap: anywhere;
 }
 .contact__me {
   display: flex;
@@ -1941,6 +1947,10 @@ div.svc__row:hover {
 .footer__blurb {
   max-width: 34ch;
   color: var(--ink-2);
+}
+.footer__mail {
+  margin-top: 16px;
+  overflow-wrap: anywhere;
 }
 .footer nav {
   display: flex;

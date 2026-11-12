@@ -75,7 +75,7 @@ WebKit was tested in Playwright, not on an actual iPhone. A real-device check is
 ### For you (deploy)
 
 - [ ] Deploy. Vercel with Upstash Redis is simplest. See `README.md`
-- [ ] Set `NEXT_PUBLIC_SITE_URL`, `ADMIN_PASSWORD`, and optionally `RESEND_API_KEY` and `MAIL_FROM` on the host
+- [ ] Set `ADMIN_PASSWORD`, and optionally `RESEND_API_KEY` and `MAIL_FROM` on the host
 - [ ] If you edited content locally, move it with Admin → Settings → Download backup, then Restore on the live site
 - [ ] Open the site on a real iPhone and Android phone
 - [ ] Initialise git when ready. `.gitignore` already excludes `.env*`, `.data/`, `CLAUDE.md` and `.claude/`

@@ -5,7 +5,7 @@ import { Arrow } from "@/components/Icons";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Sections";
 import { VideoCard } from "@/components/VideoCard";
-import { site } from "@/content/site";
+import { shareImage, site } from "@/content/site";
 import { brandLookup, getContent, getSiteMeta, isLive } from "@/lib/content";
 import { breadcrumbGraph, jsonLd, videoListGraph } from "@/lib/schema";
 
@@ -29,9 +29,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: category.seoDescription,
     alternates: { canonical: `/work/${category.slug}` },
     openGraph: {
+      type: "website",
+      siteName: "ANX",
+      locale: "en_IN",
       url: `/work/${category.slug}`,
       title: `${category.seoTitle} | ${site.person} (ANX)`,
       description: category.seoDescription,
+      images: [shareImage],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${category.seoTitle} | ${site.person} (ANX)`,
+      description: category.seoDescription,
+      images: [shareImage],
     },
   };
 }

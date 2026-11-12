@@ -15,7 +15,7 @@ export default async function Overview() {
   const unread = briefs.filter((b) => !b.read);
 
   const checklist = [
-    { done: Boolean(settings.email), label: "Inbox email for new briefs", href: "/admin/settings" },
+    { done: Boolean(settings.email), label: "Contact email (public, and where briefs are sent)", href: "/admin/settings" },
     { done: mailConfigured(), label: "Email delivery (RESEND_API_KEY on the host)", href: "/admin/settings" },
     { done: Boolean(settings.socials.instagram), label: "Instagram link", href: "/admin/settings" },
     { done: published.length > 0, label: "At least one real testimonial", href: "/admin/testimonials" },
@@ -29,7 +29,6 @@ export default async function Overview() {
       label: `View counts (${videos.filter((v) => v.views).length} of ${videos.length} videos have one)`,
       href: "/admin/videos",
     },
-    { done: !site.url.includes("localhost"), label: "Production domain (NEXT_PUBLIC_SITE_URL)", href: "/admin/settings" },
   ];
 
   return (

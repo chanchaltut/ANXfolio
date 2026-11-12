@@ -47,7 +47,7 @@ export default async function HomePage() {
   const videosFor = (slug: string) => videos.filter((v) => v.category === slug);
 
   const structured = jsonLd([
-    ...coreGraph(brands, { description: meta.description, sameAs: meta.sameAs, city: settings.city }),
+    ...coreGraph(brands, { description: meta.description, sameAs: meta.sameAs, city: settings.city, email: settings.email }),
     faqGraph(meta.faqs),
     videoListGraph(videos.filter((v) => live.some((c) => c.slug === v.category)), brandOf),
   ]);

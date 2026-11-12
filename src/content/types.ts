@@ -73,7 +73,7 @@ export type Socials = {
 
 /** Everything Ayush can change from the admin without touching code. */
 export type Settings = {
-  /** Inbox for briefs. Used for email notifications and the mail-app fallback. */
+  /** Public contact email. Shown on the site and in structured data, and new briefs are sent to it. */
   email: string;
   totalViews: string;
   topVideoViews: string;

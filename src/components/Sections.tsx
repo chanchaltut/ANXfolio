@@ -300,10 +300,19 @@ export function Contact({
               <span>Every brief comes straight to me.</span>
             </p>
           </div>
-          {social && (
-            <a className="textlink" href={social.href} target="_blank" rel="noopener me">
-              ANX on {social.label} <Arrow />
-            </a>
+          {(settings.email || social) && (
+            <p className="contact__links">
+              {settings.email && (
+                <a className="textlink" href={`mailto:${settings.email}`}>
+                  {settings.email}
+                </a>
+              )}
+              {social && (
+                <a className="textlink" href={social.href} target="_blank" rel="noopener me">
+                  ANX on {social.label} <Arrow />
+                </a>
+              )}
+            </p>
           )}
         </header>
         <div data-reveal>
@@ -340,6 +349,11 @@ export function Footer({
             {meta.settings.totalViews && ` ${meta.settings.totalViews} views across Instagram.`}
             {meta.settings.city && ` Based in ${meta.settings.city}.`}
           </p>
+          {meta.settings.email && (
+            <a className="textlink footer__mail" href={`mailto:${meta.settings.email}`}>
+              {meta.settings.email}
+            </a>
+          )}
         </div>
         <nav aria-label="Genres">
           <p className="footer__h">Work</p>

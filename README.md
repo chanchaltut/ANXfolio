@@ -37,7 +37,6 @@ All are listed in `.env.example`.
 
 | Variable | Needed for |
 | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Canonical URLs, sitemap, share cards, JSON-LD |
 | `ADMIN_PASSWORD` | The admin. Without it, `/admin` stays switched off. Changing it signs everyone out |
 | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | Storage on Vercel or any serverless host. The Vercel Upstash integration's `KV_REST_API_URL` and `KV_REST_API_TOKEN` also work |
 | `RESEND_API_KEY`, `MAIL_FROM` | Optional. Emails each brief to the inbox email. Without it, briefs are still saved to the admin inbox |
@@ -50,7 +49,7 @@ All are listed in `.env.example`.
 
 ## Deploy
 
-**Vercel (recommended):** import the project, add Upstash Redis from the Vercel Marketplace (free tier), then set `NEXT_PUBLIC_SITE_URL`, `ADMIN_PASSWORD` and optionally `RESEND_API_KEY` and `MAIL_FROM`. Redeploy.
+**Vercel (recommended):** import the project, add Upstash Redis from the Vercel Marketplace (free tier), then set `ADMIN_PASSWORD` and optionally `RESEND_API_KEY` and `MAIL_FROM`. Redeploy.
 
 **Any Node host:** `npm ci && npm run build && npm start` with the same variables. Keep `.data/` on a persistent disk.
 

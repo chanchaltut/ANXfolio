@@ -6,16 +6,21 @@ export const site = {
   person: "Ayush Nayak",
   jobTitle: "Video Editor",
   tagline: "Every frame earns the next.",
-  url: (
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    (process.env.VERCEL_PROJECT_PRODUCTION_URL
-      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-      : "http://localhost:3000")
-  ).replace(/\/$/, ""),
+  /** The apex domain redirects to www, so www is the canonical address for every production build. */
+  url: process.env.NODE_ENV === "production" ? "https://www.ayushnayak.in" : "http://localhost:3000",
+  domain: "ayushnayak.in",
+};
+
+/** Share card for pages that set their own Open Graph tags, which drops the inherited image file. */
+export const shareImage = {
+  url: "/opengraph-image.jpg",
+  width: 1200,
+  height: 630,
+  alt: `${site.name} in letters cut from ${site.person}'s video edits, with the line "${site.tagline}"`,
 };
 
 export const seedSettings: Settings = {
-  email: "",
+  email: "ayushnayakinfo@gmail.com",
   totalViews: "45M+",
   topVideoViews: "40M+",
   topVideoLabel: "on a single American Tourister reel",
@@ -190,8 +195,9 @@ export function buildFaqs(settings: Settings, brands: Brand[]): Faq[] {
       : []),
     {
       question: "How much does it cost to hire ANX as a video editor?",
-      answer:
-        "Pricing is quoted per project, based on the length of the video, the amount of footage and how many edits are needed. Send a brief through the contact form to get a quote.",
+      answer: `Pricing is quoted per project, based on the length of the video, the amount of footage and how many edits are needed. Send a brief through the contact form${
+          settings.email ? ` or to ${settings.email}` : ""
+        } to get a quote.`,
     },
     {
       question: "Can ANX edit both reels and long-form videos?",
@@ -206,8 +212,9 @@ export function buildFaqs(settings: Settings, brands: Brand[]): Faq[] {
     },
     {
       question: "How do I hire ANX?",
-      answer:
-        "Fill in the contact form with your brand, the type of video and a link to your footage or references. Mention the deadline if you have one.",
+      answer: `Fill in the contact form on ${site.domain} with your brand, the type of video and a link to your footage or references${
+        settings.email ? `, or email ${settings.email}` : ""
+      }. Mention the deadline if you have one.`,
     },
   ];
 }

@@ -19,7 +19,7 @@ export default async function SettingsPage() {
       <section className="a-card">
         <ActionForm action={updateSettings} className="a-form">
           <h2 className="a-form__title">Contact</h2>
-          <Field label="Inbox email" hint="New briefs are emailed here when email delivery is set up.">
+          <Field label="Contact email" hint="Shown publicly on the site. New briefs are also emailed here when email delivery is set up.">
             <input name="email" type="email" defaultValue={settings.email} maxLength={200} placeholder="you@example.com" />
           </Field>
           <Field label="City" hint="Optional. Helps local search, e.g. Mumbai.">
