@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import Image from "next/image";
 import type { Video } from "@/content/types";
 import { announcePlay, PLAY_EVENT } from "@/lib/motion";
 import { IMAGE_QUALITY } from "@/lib/images";
-import { embedUrl, thumbnailUrl, watchUrl } from "@/lib/youtube";
+import { EMBED_ORIGIN, embedUrl, thumbnailUrl, watchUrl } from "@/lib/youtube";
 
 /**
  * Shows a thumbnail and only creates the YouTube iframe when someone presses play,
@@ -26,6 +26,9 @@ export function VideoFacade({
 }) {
   const instance = useId();
   const [playing, setPlaying] = useState(false);
+  const wrap = useRef<HTMLDivElement>(null);
+  const frame = useRef<HTMLIFrameElement>(null);
+  const loaded = useRef(false);
   const title = label ?? video.title;
 
   useEffect(() => {
@@ -36,10 +39,36 @@ export function VideoFacade({
     return () => window.removeEventListener(PLAY_EVENT, onPlay);
   }, [instance]);
 
+  // Pause once the player has scrolled fully out of view. It stays paused on the
+  // way back, so resuming is always the viewer's choice and the position is kept.
+  useEffect(() => {
+    const el = wrap.current;
+    if (!playing || !el) return;
+    loaded.current = false;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) return;
+      if (!loaded.current) {
+        // The player cannot take commands yet, so drop it before autoplay starts off screen.
+        setPlaying(false);
+        return;
+      }
+      frame.current?.contentWindow?.postMessage(
+        JSON.stringify({ event: "command", func: "pauseVideo", args: [] }),
+        EMBED_ORIGIN,
+      );
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [playing]);
+
   return (
-    <div className={`vf vf--${video.format}`}>
+    <div ref={wrap} className={`vf vf--${video.format}`}>
       {playing ? (
         <iframe
+          ref={frame}
+          onLoad={() => {
+            loaded.current = true;
+          }}
           src={embedUrl(video.id, true)}
           title={title}
           allow="autoplay; encrypted-media; picture-in-picture; fullscreen"

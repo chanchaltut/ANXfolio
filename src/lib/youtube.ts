@@ -21,8 +21,14 @@ export function watchUrl(video: Pick<Video, "id" | "format">): string {
     : `https://www.youtube.com/watch?v=${video.id}`;
 }
 
+export const EMBED_ORIGIN = "https://www.youtube-nocookie.com";
+
 export function embedUrl(id: string, autoplay = false): string {
   const params = new URLSearchParams({ rel: "0", modestbranding: "1", playsinline: "1" });
-  if (autoplay) params.set("autoplay", "1");
-  return `https://www.youtube-nocookie.com/embed/${id}?${params}`;
+  if (autoplay) {
+    params.set("autoplay", "1");
+    // Lets the page pause the player with postMessage.
+    params.set("enablejsapi", "1");
+  }
+  return `${EMBED_ORIGIN}/embed/${id}?${params}`;
 }
